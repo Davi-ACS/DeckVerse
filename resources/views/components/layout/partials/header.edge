@@ -1,0 +1,19 @@
+<nav>
+    <div class="flex justify-between items-center p-4 bg-gray-800 text-white">
+        <div class="p-1 border-1 hover:bg-gray-100 hover:text-black rounded-md">
+            <a href="{{ route('home') }}">DeckVerse</a>
+        </div>
+        <div class="p-1 border-1 rounded-md inline-flex space-x-4">
+            <div>
+                <a class="pl-2 pr-2 hover:border-1" href="{{ route('game.view') }}">Jogos</a>
+            </div>
+            <div>
+                <a class="pl-2 pr-2 hover:border-1" href="{{ route('expansion.view') }}">Coleções</a>
+            </div>
+        </div>
+
+        <div>
+            <a href="{{ route('login') }}" class="p-2 border-1 hover:bg-gray-100 hover:text-black rounded-md">Login</a>
+        </div>
+    </div>
+</nav>

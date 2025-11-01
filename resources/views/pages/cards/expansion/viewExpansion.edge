@@ -1,0 +1,54 @@
+@layout.app({ title: "Lista de Coleção", js: '/resources/js/viewExpansion.js' })
+<div class="rounded flex items-center flex-col justify-center h-full">
+    <a class="text-red-500 hover:underline" href="{{ route('game.view') }}">Voltar</a>
+    <div class="border-1 rounded bg-gray-100 shadow-md mb-10">
+    
+        <div class="flex justify-center text-lg md:text-2xl p-2">
+            <h2>Jogo: {{ game_name }}</h2>
+        </div>
+    </div>
+    <div class= "border-1 rounded bg-gray-100 shadow-md">
+
+        <div class="flex justify-center text-6xl p-4">
+            <h1>Coleções</h1>
+        </div>
+        
+        <div> 
+            <table class="min-w-full bg-white">
+                <thead>
+                    <tr>
+                        <th class="py-2 px-4 border-b border-gray-200">Nome das Coleções</th>
+                        @if(game_name == "Todos os jogos")
+                            <th class="py-2 px-4 border-b border-gray-200">Jogo</th>
+                        @endif
+                        <th class="py-2 px-4 border-b border-gray-200">Data de Lançamento</th>
+                        <th class="py-2 px-4 border-b border-gray-200"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @each(expansion in expansions)
+                        <tr>
+                            <td class="py-2 px-4 border-b border-gray-200">{{ expansion.name }}</td>
+                            @if(game_name == "Todos os jogos")
+                                <td class="py-2 px-4 border-b border-gray-200">{{ expansion.game.name }}</td>
+                            @endif
+                            <td class="py-2 px-4 border-b border-gray-200">{{ expansion.releaseDate }}</td>
+                            <td class="py-2 px-4 border-b border-gray-200">
+                                <div class="flex flex-col md:flex-row gap-2">
+                                    <a href="{{ route('expansion.edit', { id: expansion.id }) }}" class="w-full md:w-auto px-4 py-2 bg-yellow-500 text-white font-bold rounded hover:bg-yellow-600 hover:cursor-pointer text-center">Editar</a>
+                                    <a href="{{ route('card.viewAll', { id: expansion.id }) }}" class="w-full md:w-auto px-4 py-2 bg-green-500 text-white font-bold rounded hover:bg-green-600 hover:cursor-pointer text-center">Cartas</a>
+                                    <a name="delete_expansion" href="{{ route('expansion.destroy', { id: expansion.id }) }}" class="w-full md:w-auto px-4 py-2 bg-red-500 text-white font-bold rounded hover:bg-red-600 hover:cursor-pointer text-center">Deletar</a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endeach
+                        <tr>
+                            <td colspan="5" class="py-4 px-4">
+                            <a href="{{ route('expansion.create') }}" class="w-full h-12 mt-6 px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-600 hover:cursor-pointer flex justify-center">Criar Nova Coleção</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+</div>
+@end

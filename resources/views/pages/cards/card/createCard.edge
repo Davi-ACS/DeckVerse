@@ -1,0 +1,79 @@
+@layout.app({ title: "Criar/Editar Cartas", js: '/resources/js/createExpansion.js' })
+<div class="container mx-auto bg-gray-100 rounded-lg shadow-md p-6">
+    <div class="flex justify-center text-4xl p-2 mb-4">
+        <h1 class="font-bold">{{ card ? 'Editar' : 'Criar' }} Carta</h1>
+    </div>
+    @let (url = card ? route('card.update', { id: card.id }) : route('card.store'))
+    @form({ action: url, method: 'POST', enctype: 'multipart/form-data' })
+    <div class="flex flex-col md:flex-row items-center md:items-start">
+        <div class="rounded-lg p-4 bg-white shadow-md w-2/3 md:w-1/3 ">
+            @if(card && card.image)
+            <div class="">
+                    <div class="border-1 rounded-lg p-4 bg-black shadow-md">
+                        <img src="{{ route('images.show', { name: card.image.name })}}" alt="Imagem da Carta {{ card.name }}" class="size-full rounded-lg shadow-md" />
+                    </div>
+            </div>
+            @end
+            <label for="image_card" class="block mb-2 text-xl font-bold place-self-center">{{ card ? 'Trocar' : 'Adicionar' }} Imagem:</label>
+            <input type="file" name="image_card" id="image_card" class="w-full p-2 border-1 border-gray-300 rounded-lg bg-white hover:bg-gray-200" {{ card ? '' : 'required' }}>
+        </div>
+
+        <div class="pl-4 h-full w-full md:w-2/3">
+            <div class="mb-4">
+                <input type="hidden" value="{{ card ? card.id : '' }}" name="id_card" />
+                <input type="hidden" value="{{ card ? card.expansion.id : expansion.id }}" name="id_expansion" />
+                <label for="name_card" class="block mb-2 text-3xl font-bold">Nome da Carta:</label>
+                <input type="text" name="name_card" id="name_card" class="w-full p-2 border-1 border-gray-300 rounded-lg bg-white" required value= "{{ card ? card.name : '' }}">
+            </div>
+            
+            <div class= "mb-4">
+                <label for="description_card" class="block mb-2 text-3xl font-bold">Descrição da Carta:</label>
+                <textarea name="description_card" id="description_card" rows="6" class="w-full h-32 md:h-48 resize-y p-2 border-1 border-gray-300 rounded-lg bg-white" required>{{ card ? card.description : '' }}</textarea>
+            </div>
+
+            <div class="mb-4 justify-between inline-flex w-full">
+                <div>
+                    <label for="rarity_card" class="block mb-2 text-xl font-bold">Raridade da Carta:</label>
+                    <select name="rarity_card" id="rarity_card" class="w-full p-2 border-1 border-gray-300 rounded-lg bg-white" required>
+                        <option value="" disabled {{ card ? '' : 'selected' }}>Selecione a raridade</option>
+                        @each(rarity in rarities)
+                            @if(rarity !== "")
+                                @if(card && card.rarity === rarity)
+                                    <option value="{{ rarity }}" selected>{{ rarity }}</option>
+                                @else
+                                    <option value="{{ rarity }}">{{ rarity }}</option>
+                                @end
+                            @end    
+                        @endeach
+                    </select>
+                </div>
+
+                <div>
+                    <label for="collectionCode" class="block mb-2 text-xl font-bold">Código da Coleção:</label>
+                    <input type="text" name="collectionCode" id="collectionCode" class="w-full p-2 border-1 border-gray-300 rounded-lg bg-white" required value="{{ card ? card.collectionCode : '' }}">
+                </div>
+
+                <div>
+                    <label for="language_card" class="block mb-2 text-xl font-bold">Idioma da Carta:</label>
+                    <select name="language_card" id="language_card" class="w-full p-2 border-1 border-gray-300 rounded-lg bg-white" required>
+                        <option value="" disabled {{ card ? '' : 'selected' }}>Selecione o idioma</option>
+                        @each(language in languages)
+                            @if(language !== "")
+                                @if(card && card.language === language)
+                                    <option value="{{ language }}" selected>{{ language }}</option>
+                                @else   
+                                    <option value="{{ language }}">{{ language }}</option>
+                                @end
+                            @end    
+                        @endeach
+                    </select>
+                </div>                
+        </div>
+                <div>
+                    <button type="submit" class=" flex items-center justify-center h-12 px-4 bg-green-500 text-white rounded hover:bg-green-600 w-full text-center mt-6 hover:cursor-pointer">Salvar Carta</button>
+                    <a href="{{ card ? route('card.viewSingle', { id: card.id }) : route('card.viewAll', { id: expansion.id }) }}" class="flex items-center justify-center h-12 px-4 bg-gray-500 text-white rounded hover:bg-gray-600 w-full text-center mt-4">Cancelar {{ card ? 'Edição' : 'Criação' }}</a>
+                </div>
+        @endform
+    </div>
+</div>
+@end

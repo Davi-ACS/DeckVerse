@@ -1,0 +1,25 @@
+@layout.app({ title: "Login", js: 'resources/js/login.js' })
+<div class="rounded flex items-center flex-col h-screen justify-center">
+    <div class= "border-1 rounded bg-gray-100 shadow-md">
+        <div class="flex justify-center text-6xl p-4">
+            <h1>Login</h1>
+        </div>
+        @let (url = route('home'))
+        <div> 
+            @form({ action: url, method: 'POST', enctype: 'multipart/form-data' })
+                <div class= "frex pb-8">
+                    <label for="email" class="block mb-2 text-3xl font-bold">Email:</label>
+                    <input type="email" name="email" id="email" class="w-md p-2 border-1 border-gray-300 rounded bg-white" required>
+                </div>
+                <div class= "frex pb-2">
+                    <label for="password" class="block mb-2 text-3xl font-bold mt-4">Password:</label>
+                    <input type="password" name="password" id="password" class="w-md p-2 border border-gray-300 rounded bg-white" required>
+                </div>
+                <div class="flex justify-center size-md pb-4">
+                    <button type="submit" class="w-1/2 h-12 mt-6 px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-600 hover:cursor-pointer">Login</button>
+                </div>
+            @end
+        </div>
+    </div>
+</div>
+@end

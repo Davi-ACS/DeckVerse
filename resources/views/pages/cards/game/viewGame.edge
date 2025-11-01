@@ -1,0 +1,61 @@
+@layout.app({ title: "Lista de jogos", js: '/resources/js/viewGame.js' })
+<div class="rounded flex items-center flex-col h-screen justify-center">
+    <div class= "border-1 rounded bg-gray-100 shadow-md">
+        <div class="flex justify-center text-6xl p-4">
+            <h1>Lista de Jogos</h1>
+        </div>
+        
+        <div> 
+            <table class="min-w-full bg-white">
+                <thead>
+                    <tr>
+                        <th class="py-2 px-4 border-b border-gray-200">Nome do Jogo</th>
+                        <th class="py-2 px-4 border-b border-gray-200">Raridade</th>
+                        <th class="py-2 px-4 border-b border-gray-200">Idioma</th>
+                        <th class="py-2 px-4 border-b border-gray-200"></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @each(game in games)
+                        <tr>
+                            <td class="py-2 px-4 border-b border-gray-200">{{ game.name }}</td>
+                            <td class="py-2 px-4 border-b border-gray-200">
+                                <select id="rarity_game">
+                                    <option value="" selected disabled>Ver</option>
+                                    @each(rarity in game.rarity.split(" "))
+                                        @if(rarity !== "")
+                                            <option disabled value="{{ rarity }}">{{ rarity }}</option>
+                                        @end
+                                    @endeach
+                                </select>
+                            </td>
+                            <td class="py-2 px-4 border-b border-gray-200">
+                                <select id="language_game">
+                                    <option value="" selected disabled>Ver</option>
+                                    @each(language in game.language.split(" "))
+                                        @if(language !== "")
+                                            <option disabled value="{{ language }}">{{ language }}</option>
+                                        @end
+                                    @endeach
+                                </select>
+                            </td>
+                            <td class="py-2 px-4 border-b border-gray-200">
+                                <div class="flex flex-col md:flex-row gap-2 text-center">
+                                    <a href="{{ route('game.edit', { id: game.id }) }}" class="px-4 py-2 bg-yellow-500 text-white font-bold rounded hover:bg-yellow-600 hover:cursor-pointer">Editar</a>
+                                    <a href="{{ route('expansion.viewFiltered', { game: game.name }) }}" class="px-4 py-2 bg-green-500 text-white font-bold rounded hover:bg-green-600 hover:cursor-pointer">Expansões</a>
+                                    <a name="delete_game" href="{{ route('game.destroy', { id: game.id }) }}" class="px-4 py-2 bg-red-500 text-white font-bold rounded hover:bg-red-600 hover:cursor-pointer">Deletar</a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endeach
+                    <tr>
+                        <td colspan="5" class="py-4 px-4">
+                            <a href="{{ route('game.create') }}" class="w-full h-12 mt-6 px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-600 hover:cursor-pointer flex justify-center">Criar Novo Jogo</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+</div>
+@end
