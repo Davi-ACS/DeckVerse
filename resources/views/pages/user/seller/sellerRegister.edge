@@ -1,0 +1,56 @@
+@layout.app({ title: "Seller Registration" })
+<div class="container w-full md:w-2/4 place-self-center h-full bg-gray-100 rounded-lg shadow-md p-6">
+    @form({ action: route('seller.store'), method: 'POST' })
+    <div class="p-8 border-1 rounded-lg bg-white shadow-md mt-6 md:mt-0 w-full place-self-center">
+        <h1 class="text-3xl font-bold mb-4 place-self-center">Criando seu Perfil Vendedor</h1>
+
+        <div>
+            <label for="store_name" class="label-input">Nome da Loja</label>
+            @!input({
+                type: 'text',
+                id: 'store_name',
+                name: 'store_name',
+                class: 'input-text',
+                placeholder: 'Digite o nome da sua loja',
+                warning: "O nome da loja",
+                value: old('store_name')
+            })
+        </div>
+        <div class="mt-4">
+            <label for="phone" class="label-input">Telefone</label>
+            @!input({
+                type: 'tel',
+                id: 'phone',
+                name: 'phone',
+                maxlength: '11',
+                class: 'input-text',
+                placeholder: 'Digite seu telefone',
+                warning: 'O telefone',
+                value: old('phone')
+            })
+        </div>
+
+        <div class="mt-4">
+            <label for="address" class="label-input">Endereço</label>
+            @!input({
+                type: 'text',
+                id: 'address',
+                name: 'address',
+                class: 'input-text',
+                placeholder: 'Digite seu endereço(rua, número, cidade, estado)',
+                warning: 'O endereço',
+                value: old('address')
+            })
+        </div>
+
+        <div class="mt-6">
+            <button type="submit" class="input-bttn bg-green-500 text-white rounded hover:bg-green-600 w-full text-center">Salvar Loja</button>
+        </div>
+        <div>
+            <a href="{{ route('user.profile') }}" class="flex items-center justify-center h-12 px-4 bg-gray-500 text-white rounded hover:bg-gray-600 w-full text-center mt-4">Cancelar</a>
+        </div>
+
+    </div>
+    @endform
+</div>
+@end

@@ -1,19 +1,23 @@
 <nav>
-    <div class="flex justify-between items-center p-4 bg-gray-800 text-white">
-        <div class="p-1 border-1 hover:bg-gray-100 hover:text-black rounded-md">
-            <a href="{{ route('home') }}">DeckVerse</a>
-        </div>
-        <div class="p-1 border-1 rounded-md inline-flex space-x-4">
-            <div>
-                <a class="pl-2 pr-2 hover:border-1" href="{{ route('game.view') }}">Jogos</a>
-            </div>
-            <div>
-                <a class="pl-2 pr-2 hover:border-1" href="{{ route('expansion.view') }}">Coleções</a>
-            </div>
-        </div>
+    <div class="bg-gray-800 text-white p-4 shadow-lg">
+        <div class="flex justify-between items-center mb-4">
+            <a class="text-2xl font-bold hover:text-blue-400 transition" href="{{ route('home') }}">DeckVerse</a>
+          
+        
 
-        <div>
-            <a href="{{ route('login') }}" class="p-2 border-1 hover:bg-gray-100 hover:text-black rounded-md">Login</a>
+            <div class="flex items-center gap-4">
+                
+
+                <div class="flex items-center gap-2">
+                    @if(auth.user)
+                        <span class="hidden sm:inline text-sm">{{ auth.user.fullName.split(" ")[0] }}</span>
+                        <a href="{{ route('user.profile') }}" class="px-3 py-1 hover:bg-gray-700 rounded-md transition text-sm">Perfil</a>
+                        <a href="{{ route('logout') }}" class="px-3 py-1 hover:bg-red-600 rounded-md transition text-sm">Logout</a>
+                    @else
+                        <a href="{{ route('user.login') }}" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded-md transition text-sm">Login</a>
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
 </nav>

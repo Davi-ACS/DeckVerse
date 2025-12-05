@@ -1,0 +1,40 @@
+@layout.app({ title: "Home" })
+<div class="container w-full place-self-center h-full bg-gray-100 rounded-lg shadow-md p-6">
+    @each(group in groupedProducts)
+        <section class="mb-6 border border-gray-200 rounded-lg bg-white shadow-sm overflow-hidden p-4">
+            <div class="flex items-center justify-between mb-3">
+                <h2 class="text-2xl font-extrabold tracking-wide uppercase text-black bold">{{ group.gameName }}</h2>
+
+                <form method="GET" action="{{ route('home.viewFiltered', { game: group.gameName }) }}" class="flex items-center gap-2">
+                    <input type="text" name="search" placeholder="Buscar nesta coleção..." value="{{ search || '' }}" class="bg-gray-100 border border-gray-300 rounded-l-md px-3 py-1 text-sm focus:outline-none" />
+                    <input type="hidden" name="perPage" value="{{ perPage }}" />
+                    <button type="submit" class="px-3 py-1 bg-green-500 hover:bg-green-600 hover:cursor-pointer text-white rounded-r-md text-sm">Buscar</button>
+                </form>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                @each(card in group.cards)
+                    <div class="p-3 rounded-md bg-gray-50 hover:shadow-md transition hover:scale-105 hover:z-10">
+                        <a href="{{ route('user.purchases', { id: card.id }) }}" class="flex flex-col items-center text-center">
+                            <div class="w-full h-64 flex items-center justify-center bg-white rounded-md overflow-hidden">
+                                <img src="{{ route('images.show', { name: card.image.name }) }}" alt="{{ card.name }}" class="max-w-full max-h-full object-contain" />
+                            </div>
+                            <span class="text-sm font-semibold mt-3 line-clamp-2">{{ card.name }}</span>
+                        </a>
+                    </div>
+                @endeach
+            </div>
+
+            <!-- Paginação -->
+            <div class="mt-4 flex items-center justify-between">
+                <div class="text-sm text-gray-600">Mostrando {{ (page-1)*perPage + 1 }} - {{ (page-1)*perPage + products.length }} de {{ total }}</div>
+                <div class="flex items-center gap-2">
+                    <a href="{{ route('expansion.viewFiltered', { game: group.gameName }) }}?search={{ search || '' }}&page={{ page > 1 ? page - 1 : 1 }}&perPage={{ perPage }}" class="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300 text-sm">&larr; Anterior</a>
+                    <span class="text-sm">{{ page }} / {{ totalPages }}</span>
+                    <a href="{{ route('expansion.viewFiltered', { game: group.gameName }) }}?search={{ search || '' }}&page={{ page < totalPages ? page + 1 : totalPages }}&perPage={{ perPage }}" class="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300 text-sm">Próxima &rarr;</a>
+                </div>
+            </div>
+        </section>
+    @endeach
+</div>
+@end

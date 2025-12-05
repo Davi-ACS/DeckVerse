@@ -1,0 +1,52 @@
+@layout.app({ title: "Carta", js: '/resources/js/viewDetailsCard.js' })
+<div class="container mx-auto bg-gray-100 rounded-lg shadow-md p-6">
+<div class="grid grid-cols-1 gap-6">
+    <!-- Header -->
+    <div class="bg-white rounded-lg shadow p-4 text-center">
+        <h1 class="text-2xl font-bold text-gray-800">Seu Carrinho</h1>
+    </div>
+
+    <!-- Items List -->
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+        @if(cart && cart.length > 0)
+            @each(item in cart)
+                <div class="border-b p-4 flex items-center justify-between hover:bg-gray-50">
+                    <div class="flex-1">
+                        <a href= {{ route('user.purchases', { id: item.product.card.id }) }} class="text-lg font-semibold text-blue-600 hover:underline">
+                            {{ item.product.card.name }}
+                        </a>
+                        <p class="text-green-600 text-sm">Total: R$ {{ item.product.price * item.quantity }}</p>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                        <div class="flex items-center border rounded">
+                            <a href= {{ route('cart.add', { product: item.product.id, quantity: -1 }) }} class="px-3 py-1 text-gray-600 hover:bg-gray-100">−</a>
+                            <span class="px-4 py-1 font-semibold" id="qty-{{ item.id }}">{{ item.quantity }}</span>
+                            <a href= {{ route('cart.add', { product: item.product.id, quantity: 1 }) }} class="px-3 py-1 text-gray-600 hover:bg-gray-100">+</a>
+                        </div>
+
+                        <a href="/cart/remove/{{ item.id }}" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 inline-block">
+                            Remover
+                        </a>
+                    </div>
+                </div>
+            @endeach
+        @else
+            <div class="p-8 text-center text-gray-500">
+                <p>Seu carrinho está vazio</p>
+            </div>
+        @endif
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex gap-4 justify-center">
+        <a href="/profile" class="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+            Voltar para o Perfil
+        </a>
+        <a href="/checkout" class="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600">
+            Continuar com Pagamento
+        </a>
+    </div>
+</div>
+</div>
+@end

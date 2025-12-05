@@ -9,7 +9,6 @@ export default class extends BaseSchema {
       table.string('name').notNullable()
       table.string('description', 255).notNullable()
       table.string('rarity').notNullable()
-      table.string('language').notNullable()
       table.string('collection_code').notNullable()
       table.integer('expansion_id').unsigned().references('id').inTable('expansions').onDelete('CASCADE')
 

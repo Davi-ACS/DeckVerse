@@ -1,0 +1,48 @@
+@layout.app({ title: "Login", js: '/resources/js/auth.js' })
+<div class="container w-full md:w-2/4 place-self-center h-full bg-gray-100 rounded-lg shadow-md p-6">
+    @form({ action: route('user.authenticate'), method: 'POST' })
+    <div class="p-8 border-1 rounded-lg bg-white shadow-md mt-6 md:mt-0 w-full place-self-center">
+        <h1 class="text-3xl font-bold mb-6 text-center">Login</h1>
+        <div class="w-3/4 mx-auto flex flex-col mb-6">
+            <label for="email" class="input-label">Email:</label>
+            @!input({ 
+                type: 'text', 
+                name: 'email', 
+                id: 'email', 
+                placeholder: 'Digite seu email', 
+                required: true,
+                class: 'input-text',
+                value: old('email'),
+            })
+        </div>
+
+        <div class="w-3/4 mx-auto flex flex-col mb-6">
+            <label for="password" class="input-label">Senha:</label>
+            @!input({ 
+                type: 'password', 
+                name: 'password', 
+                id: 'password', 
+                placeholder: 'Digite sua senha', 
+                required: true,
+                class: 'input-text',
+                value: old('password'),
+            })
+
+            <div class="mt-2 flex items-center">
+                <input type="checkbox" id="showPassword" class="mr-2" onchange="togglePasswordVisibility('password', this.checked)">
+                <label for="showPassword" class="text-sm text-gray-600">Mostrar senha</label>
+            </div>
+        </div>
+
+        <div class="w-2/4 mx-auto flex flex-col mb-6">
+            <button type="submit" class="input-bttn bg-emerald-500 hover:bg-emerald-600">Entrar</button>
+        </div>
+
+        <div class="w-2/4 mx-auto flex flex-col mb-6">
+            <p class="text-center">Não possui uma conta? <a href="{{ route('user.register') }}" class="text-blue-500 hover:underline">Registre-se aqui</a></p>
+        </div>
+    </div>
+@endform
+
+</div>
+@end

@@ -1,0 +1,13 @@
+<div>
+  <textarea class="input" {{ $props.toAttrs() }} 
+    @flashMessage(`errors.${name}`)
+    aria-invalid="true"
+    @end
+    ></textarea>
+
+  @flashMessage(`errors.${name}`)
+    <div class="place-self-center text-red-600 text-sm">
+      {{ String($message).split($props.name).join($props.warning) }}
+    </div>
+  @end
+</div>

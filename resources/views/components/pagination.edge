@@ -1,0 +1,17 @@
+<div class="pagination">
+            @if($props.page > 1)
+                <a href="{{ route($props.route, { ...$props.queryParams, page: $props.page - 1 }) }}" class="btn-prev">Anterior</a>
+            @endif
+
+            @for(pageNum = 1; pageNum <= Math.ceil($props.total / $props.pageSize); pageNum++)
+                @if(pageNum === $props.page)
+                    <span class="page-current">{{ pageNum }}</span>
+                @else
+                    <a href="{{ route($props.route, { ...$props.queryParams, page: pageNum }) }}">{{ pageNum }}</a>
+                @endif
+            @endeach
+
+            @if($props.page < Math.ceil($props.total / $props.pageSize))
+                <a href="{{ route($props.route, { ...$props.queryParams, page: $props.page + 1 }) }}" class="btn-next">Próximo</a>
+            @endif
+</div>

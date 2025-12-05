@@ -3,7 +3,7 @@ import vine from '@vinejs/vine'
 export const createCardValidator = vine.compile(
     vine.object({
         name_card: vine.string().minLength(2).maxLength(100),
-        description_card: vine.string().maxLength(500),
+        description_card: vine.string(),
         rarity_card: vine.string(),
         language_card: vine.string(),
         collectionCode: vine.string().minLength(2).maxLength(10),
@@ -18,7 +18,7 @@ export const createCardValidator = vine.compile(
 export const updateCardValidator = vine.compile(
     vine.object({
         name_card: vine.string().minLength(2).maxLength(100),
-        description_card: vine.string().maxLength(500),
+        description_card: vine.string(),
         rarity_card: vine.string(),
         language_card: vine.string(),
         collectionCode: vine.string().minLength(2).maxLength(10),

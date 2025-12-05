@@ -1,52 +1,49 @@
 @layout.app({ title: "Criar/Editar Coleção", js: '/resources/js/createExpansion.js' })
-<div class="container mx-auto bg-gray-100 rounded-lg shadow-md p-6">
-    <div class="flex justify-center text-4xl p-2 mb-4 bg-white rounded-lg shadow-md w-2/3 place-self-center border-1">
-        <h1 class="font-bold">{{ expansion ? 'Editar' : 'Criar' }} Coleção</h1>
-    </div>
+<div class="container w-full md:w-2/4 place-self-center h-full bg-gray-100 rounded-lg shadow-md p-6">
     @let (url = expansion ? route('expansion.update', { id: expansion.id }) : route('expansion.store'))
-    @form({ action: url, method: 'POST', enctype: 'multipart/form-data' })
+    @form({ action: url, method: 'POST', enctype: 'multipart/form-data' })    
+        <div class="p-8 border-1 rounded-lg bg-white shadow-md mt-6 md:mt-0 w-full place-self-center">
 
-        <div class="pl-4 h-full w-full md:w-2/3 bg-white rounded-lg shadow-md p-6 mx-auto">
-                <div class= "mb-4">
-                    <input type="hidden" value="{{ expansion ? expansion.id : '' }}" name="id_expansion" />
-                    <label for="name_expansion" class="block mb-2 text-3xl font-bold">Nome da Coleção:</label>
-                    <input type="text" name="name_expansion" id="name_expansion" class="w-full p-2 border-1 border-gray-300 rounded-lg bg-white" required value= "{{ expansion ? expansion.name : '' }}">
-                </div>
-            
-                 <div class="mb-4">
-                    <label for="release_date" class="place-self-center block mb-2 text-3xl font-bold">Data de Lançamento:</label>
-                    <div id="release_date" class="place-self-center text-center w-full md:w-3/4 flex justify-between border-1 border-gray-300 rounded-lg bg-white p-4">
-                        <div>
-                            <label for="release_day" class="font-bold text-2xl">Dia:</label>
-                            <input type="number" name="release_day" id="release_day" class="w-20 p-2 border-1 border-gray-300 rounded-lg bg-white ml-2 mr-4" min="1" max="31" required value= "{{ expansion ? expansion.releaseDate.split('-')[2] : '' }}">
-                        </div>
+            <h1 class="text-3xl font-bold mb-6 text-center">Criar/Editar Coleção</h1>
 
-                        <div> 
-                            <label for="release_month" class="font-bold text-2xl">Mês:</label>
-                            <input type="number" name="release_month" id="release_month" class="w-20 p-2 border-1 border-gray-300 rounded-lg bg-white ml-2 mr-4" min="1" max="12" required value= "{{ expansion ? expansion.releaseDate.split('-')[1] : '' }}">
-                        </div>
-                        <div>
-                            <label for="release_year" class="font-bold text-2xl">Ano:</label>
-                            <input type="number" name="release_year" id="release_year" class="w-20 p-2 border-1 border-gray-300 rounded-lg bg-white ml-2 mr-4" min="1900" max="2100" required value= "{{ expansion ? expansion.releaseDate.split('-')[0] : '' }}">
-                        </div>
-                    </div>
-                </div>
+            <div class="w-3/4 mx-auto flex flex-col mb-6">
+                
+                @!input({
+                    type: "hidden",
+                    name: "id_expansion",
+                    value: expansion ? expansion.id : '',
+                })
+                <label class="label-input" for="name_expansion">Nome da Coleção:</label>
+                @!input({
+                    type: "text",
+                    name: "name_expansion",
+                    id: "name_expansion",
+                    placeholder: "Nome da coleção...",
+                    class: "input-text",
+                    value: expansion ? expansion.name : '',
+                    warning: 'O nome da coleção'
+                })
+            </div>
 
-                <div class= "mb-4">
-                    <label for="game_id" class="block mb-2 text-3xl font-bold">Nome do Jogo:</label>
-                    <select name="game_id" id="game_id" class="w-full p-2 border-1 border-gray-300 rounded-lg bg-white" required>
-                            <option value="" disabled selected>Selecione um Jogo</option>
-                        @each(game in games)
-                            <option {{ expansion && expansion.gameId === game.id ? 'selected' : '' }} value="{{ game.id }}">{{ game.name }}</option>
-                        @end
-                    </select>
-                </div>              
-        </div>
+            <div class="w-3/4 mx-auto flex flex-col mb-6">
+                <label class="label-input" for="game_name">Nome do Jogo:</label>
+                @!select({
+                    required: true,
+                    name: "game_name",
+                    id: "game_name",
+                    class: "input-select",
+                    default: "Selecione um Jogo",
+                    options: names,
+                    selected: expansion ? expansion.game.name : '',
+                })
+            </div>
+
                 <div class="w-2/3 mx-auto flex flex-col md:flex-row gap-4 justify-center">
                     <button type="submit" class=" flex items-center justify-center h-12 px-4 bg-green-500 text-white rounded hover:bg-green-600 w-full text-center mt-6 hover:cursor-pointer">Salvar Coleção</button>
                     <a href= {{ route('expansion.view') }} class="flex items-center justify-center h-12 px-4 bg-gray-500 text-white rounded hover:bg-gray-600 w-full text-center mt-2 md:mt-6">Cancelar {{ expansion ? 'Edição' : 'Criação' }}</a>
                 </div>
-        @endform
-    </div>
+
+        </div>
+    @endform
 </div>
 @end

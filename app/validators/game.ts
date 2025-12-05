@@ -5,8 +5,6 @@ import vine from '@vinejs/vine'
  */
 export const createGameValidator = vine.compile(
   vine.object({
-    name_game: vine.string().minLength(3).maxLength(255),
-    rarity_game: vine.string().optional(),
-    language_game: vine.string().optional(),
+    name_game: vine.string().minLength(3).maxLength(255).unique({ table: 'games', column: 'name' }),
   })
 )

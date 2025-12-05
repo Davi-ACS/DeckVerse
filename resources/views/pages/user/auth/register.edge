@@ -1,0 +1,106 @@
+@layout.app({ title: "Register", js: "/resources/js/auth.js" })
+<div class="container w-full md:w-2/4 place-self-center h-full bg-gray-100 rounded-lg shadow-md p-6">
+    @form({ action: route('user.create'), method: 'POST' })
+    <div class="p-8 border-1 rounded-lg bg-white shadow-md mt-6 md:mt-0 w-full place-self-center">
+        <h1 class="text-3xl font-bold mb-6 text-center">Criando uma Conta</h1>
+        <div class="w-3/4 mx-auto flex flex-col mb-6">
+
+            <label class="label-input" for="full_name">Nome Completo:</label>
+            @!input({
+                type: "text",
+                id: "full_name",
+                name: "full_name",
+                placeholder: "Nome Completo...",
+                class: "input-text",
+                warning: "O nome",
+                value: old('full_name')
+            })
+        </div>
+        <div class="w-3/4 mx-auto flex flex-col mb-6">
+            <label class="label-input" for="email">Email:</label>
+            @!input({
+                type: "text",
+                id: "email",
+                name: "email",
+                placeholder: "Email...",
+                class: "input-text",
+                warning: "O email",
+                value: old('email')
+            })
+        </div>
+
+        <div class="w-3/4 mx-auto flex flex-col mb-6">
+            <label class="label-input" for="birth_date">Data de Nascimento:</label>
+            @!input({
+                type: "date",
+                id: "birth_date",
+                name: "birth_date",
+                class: "input-text",
+                min: "1900-01-01",
+                max: "2024-12-31",
+                warning: "A data de nascimento",
+                value: old('birth_date')
+            })
+        </div>
+
+        <div class="w-3/4 mx-auto flex flex-col mb-6">
+            <label class="label-input" for="password">Senha:</label>
+            @!input({
+                type: "password",
+                id: "password",
+                name: "password",
+                placeholder: "Senha...",
+                class: "input-text",
+                warning: "A senha",
+                value: old('password')
+            })
+            <div class="flex items-center gap-2 mt-2">
+                @!input({
+                    type: "checkbox",
+                    id: "show_password",
+                    name: "show_password",
+                    onchange: "togglePasswordVisibility('password', this.checked)"
+                })
+                <label for="show_password" class="text-sm text-gray-600 select-none">
+                    Mostrar senha
+                </label>
+            </div>
+        </div>
+
+
+        <div class="w-3/4 mx-auto flex flex-col mb-6">
+            <label class="label-input" for="password_confirmation">Confirmação de Senha:</label>
+
+            @!input({
+                type: "password",
+                id: "password_confirmation",
+                name: "password_confirmation",
+                placeholder: "Confirme a senha...",
+                class: "input-text",
+                value: old('password_confirmation')
+            })
+
+            <div class="flex items-center gap-2 mt-2">
+                @!input({
+                    type: "checkbox",
+                    id: "show_password_confirmation",
+                    name: "show_password_confirmation",
+                    onchange: "togglePasswordVisibility('password_confirmation', this.checked)"
+                })
+                <label for="show_password_confirmation" class="text-sm text-gray-600 select-none">
+                    Mostrar senha
+                </label>
+            </div>
+        </div>
+
+        <div class="w-2/4 mx-auto flex flex-col mb-6">
+            <button class="input-bttn bg-green-500 hover:bg-green-700" type="submit">Registrar</button>
+        </div>
+
+        <div class="w-2/4 mx-auto flex flex-col mb-6">
+            <a class="text-blue-500 hover:underline text-center" href={{ route('user.login') }}>Já possui uma conta? Faça login aqui.</a>
+        </div>
+    </div>
+    @endform
+</div>
+@end

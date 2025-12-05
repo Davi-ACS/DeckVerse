@@ -1,0 +1,130 @@
+@layout.app({ title: "Detalhes do Produto", js: '/resources/js/sellerShowProduct.js'})
+<div class="container w-full md:w-2/4 place-self-center h-full bg-gray-100 rounded-lg shadow-md p-6">
+    <div>
+        <h1 class="text-3xl font-bold mb-4 place-self-center">DETALHES DO PRODUTO</h1>
+    </div>
+
+    <div>
+        <div class="p-8 border-1 rounded-lg bg-white shadow-md mt-6 w-full place-self-center">
+            <h1 class="text-3xl font-bold mb-4 place-self-center">{{ card.name }}</h1>
+            <div class="flex justify-center mb-4">
+                @if(card.image)
+                    <img src="{{ card.image }}" alt="{{ card.name }}" class="max-w-sm rounded-lg shadow-md">
+                @else
+                    <p class="text-red-500">Imagem não disponível</p>
+                @endif
+            </div>
+
+            <div>
+                <p class="text-gray-700 mb-2"><strong>Booster:</strong> {{ card.set_name }}</p>
+                <p class="text-gray-700 mb-2"><strong>Raridade:</strong> {{ card.rarity }}</p>
+                <p class="text-gray-700 mb-2"><strong>Descrição:</strong> {{ card.oracle_text || 'Sem descrição' }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-3xl font-bold mb-4 mt-4 place-self-center">
+        <h2>Adicionar uma oferta</h2>
+    </div>
+
+    @form({ id: 'form', action: route('seller.products.store'), method: 'POST' })
+    <div>
+        @!input({
+            type: 'hidden',
+            name: 'gameName',
+            value: gameName,
+        })
+        @!input({
+            type: 'text',
+            value: card.image,
+            id: 'image_url',
+            name: 'image_URL',
+        })
+        @!input({
+            type: 'hidden',
+            name: 'cardId',
+            value: card.id,
+        })
+        @!input({
+            type: 'hidden',
+            name: 'cardName',
+            value: card.name.replaceAll('"', "'"),
+        })
+        @!input({
+            type: 'hidden',
+            name: 'cardSetName',
+            value: card.set_name,
+        })
+        @!input({
+            type: 'hidden',
+            name: 'cardRarity',
+            value: card.rarity,
+        })
+        @!input({
+            type: 'hidden',
+            name: 'cardOracleText',
+            value: card.oracle_text?.replaceAll('"', "'") || 'Sem descrição',
+        })
+        <div class="mt-4">
+            <label for="description" class="label-input">Descrição do Produto</label>
+            @!input({
+                type: 'text',
+                id: 'description',
+                name: 'description',
+                class: 'input-text',
+                placeholder: 'Digite a descrição do produto',
+                required: true,
+            })
+        </div>
+
+        <div class="mt-4">
+            @let (options = ['Quase-Perfeita','Pouca-Usada', 'Muito-Usada', 'Danificada' ])
+            <label for="quality" class="label-input">Qualidade do Produto</label>
+            @!select({
+                id: 'quality',
+                name: 'quality',
+                class: 'input-select',
+                required: true,
+                options: options,
+                default: "Adicione uma qualidade",
+            })
+
+        </div>
+
+        <div class="mt-4">
+            <label for="price" class="label-input">Preço (R$)</label>
+            @!input({
+                type: 'number',
+                min: '0',
+                step: '0.01',
+                id: 'price',
+                name: 'price',
+                class: 'input-text',
+                placeholder: 'Digite o preço do produto',
+                required: true,
+            })
+        </div>
+
+        <div class="mt-4">
+            <label for="stockQuantity" class="label-input">Quantidade em Estoque</label>
+            @!input({
+                type: 'number',
+                min: '1',
+                step: '1',
+                id: 'stockQuantity',
+                name: 'stockQuantity',
+                class: 'input-text',
+                placeholder: 'Digite a quantidade em estoque',
+                required: true,
+            })
+        </div>
+
+        <div class="mt-6">
+            <button id="createbtt" type="submit" class="input-bttn bg-green-500 text-white rounded hover:bg-green-600 w-full text-center">Adicionar Produto</button>
+            <a href="{{ route('seller.products') }}">Voltar</a>
+        </div>
+    </div>
+    @endform
+
+</div>
+@end

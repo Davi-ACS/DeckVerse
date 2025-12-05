@@ -1,66 +1,38 @@
 @layout.app({ title: "Criar/Editar Jogo", js: "/resources/js/createGame.js" })
-<div class="container mx-auto bg-gray-100 rounded-lg shadow-md p-6">
-    <div class="flex justify-center text-4xl p-2 mb-4 bg-white rounded-lg shadow-md w-2/3 place-self-center border-1">
-        <h1 class="font-bold">{{ game ? 'Editar' : 'Criar' }} Jogo</h1>
-    </div>
+<div class="container w-full md:w-2/4 place-self-center h-full bg-gray-100 rounded-lg shadow-md p-6">
     @let (url = game ? route('game.update', { id: game.id }) : route('game.store'))
     @form({ action: url, method: 'POST', enctype: 'multipart/form-data' })
-    <div class="flex flex-col items-center md:items-start">
+    <div class="p-8 border-1 rounded-lg bg-white shadow-md mt-6 md:mt-0 w-full place-self-center">
 
-        <div class="pl-4 h-full w-full md:w-2/3 bg-white rounded-lg p-4 shadow-md flex flex-col space-y-4 place-self-center items-center">
-                <div class= "mb-4 w-full flex flex-col items-center">
-                    <input name="id_game" type="hidden" value= {{ game ? game.id : '' }} >
-                    <label for="name_game" class="block mb-2 text-3xl font-bold">Nome do Jogo:</label>
-                    <input type="text" name="name_game" id="name_game" class="w-2/3 p-2 border-1 border-gray-300 rounded bg-white" required value= {{ game ? game.name : '' }} >
-                </div>
-            
+        <h1 class="text-3xl font-bold mb-6 text-center">Criar/Editar Jogo</h1>
 
-                <div class="mb-4 flex flex-col">
-                    <label for="rarity_game" class="block mb-2 text-3xl font-bold place-self-center">Raridade do Jogo:</label>
-                    <select id="rarity_game" class="w-full p-2 border-1 border-gray-300 rounded bg-white">
-                        <option value="" disabled selected>Adicione uma raridade</option>
-                        @if(game)
-                            @let (index = 1)
-                            @each(rarity in game.rarity.split(" "))
-                                @if(rarity !== "")
-                                    <option value="{{ rarity }}">{{ index }}: {{ rarity }}</option>
-                                    @assign (index = index + 1)
-                                @end    
-                            @endeach
-                        @end
-                    </select>
-                    <input type="hidden" name="rarity_game" id="rarity_game_id" value=" ">
-                    <div class="flex flex-row justify-center space-x-2 mt-2">
-                        <input type="button" id="add_priority_rarity" value="^" title="Diminua a raridade selecinada" class="ml-2 px-4 py-2 bg-green-500 text-white font-bold rounded hover:bg-green-600 hover:cursor-pointer">
-                        <input type="button" id="add_rarity" value="+" title="Adicione Uma Raridade" class="ml-2 px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-600 hover:cursor-pointer">
-                        <input type="button" id="remove_rarity" value="-" class="ml-2 px-4 py-2 bg-red-500 text-white font-bold rounded hover:bg-red-600 hover:cursor-pointer">
-                    </div>    
-                </div>
-
-                <div class="mb-4 lex flex-col">
-                    <label for="language_game" class="block mb-2 text-3xl font-bold">Idioma do Jogo:</label>
-                    <select id="language_game" class="w-full p-2 border-1 border-gray-300 rounded bg-white">
-                        <option value="" disabled selected>Adicione um idioma</option>
-                        @if(game)
-                            @each(language in game.language.split(" "))
-                                @if(language !== "")
-                                    <option value="{{ language }}">{{ language }}</option>
-                                @end    
-                            @endeach
-                        @end
-                    </select>
-                    <div class="flex flex-row justify-center space-x-2 mt-2">
-                        <input type="button" value="+" id="add_language" class="ml-4 px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-600 hover:cursor-pointer">
-                        <input type="button" value="-" id="remove_language" class="ml-2 px-4 py-2 bg-red-500 text-white font-bold rounded hover:bg-red-600 hover:cursor-pointer">
-                        <input type="hidden" name="language_game" id="language_game_id" value="">
-                    </div>
-                </div>         
+            <div class="w-3/4 mx-auto flex flex-col mb-6">
+                @!input({
+                    type: "hidden",
+                    name: "id_game",
+                    value: game ? game.id : '',
+                })
+                <label class="label-input" for="input-name_game">Nome do Jogo:</label>
+                @!input({
+                    type: "text",
+                    name: "name_game",
+                    id: "input-name_game",
+                    placeholder: "Nome do jogo...",
+                    class: "input-text",
+                    value: game ? game.name : '',
+                })
             </div>
-                <div class="place-self-center w-full md:w-1/3">
-                    <button id="save_game" type="submit" class=" flex items-center justify-center h-12 px-4 bg-green-500 text-white rounded hover:bg-green-600 w-full text-center mt-6 hover:cursor-pointer">Salvar Jogo</button>
-                    <a href="{{ route('game.view') }}" class="flex items-center justify-center h-12 px-4 bg-gray-500 text-white rounded hover:bg-gray-600 w-full text-center mt-4">Cancelar {{ game ? 'Edição' : 'Criação' }}</a>
-                </div>
-        @endform
+
+        <div class="mt-6">
+            <button type="submit" id="save_game" class="input-bttn bg-green-500 text-white rounded hover:bg-green-600 w-full text-center">Salvar Jogo</button>
+        </div>
+
+        <div>
+            <a href="{{ route('game.view') }}" class="flex items-center justify-center h-12 px-4 bg-gray-500 text-white rounded hover:bg-gray-600 w-full text-center mt-4">Cancelar</a>
+        </div>
+ 
     </div>
+        
+@endform
 </div>
 @end

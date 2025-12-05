@@ -16,9 +16,6 @@ export default class Expansion extends BaseModel {
   @column()
   declare name: string
 
-  @column()
-  declare releaseDate: string
-
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

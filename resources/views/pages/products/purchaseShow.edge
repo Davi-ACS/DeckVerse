@@ -1,0 +1,46 @@
+@layout.app({ title: "Carta", js: '/resources/js/viewDetailsCard.js' })
+<div class="container mx-auto bg-gray-100 rounded-lg shadow-md p-6">
+<div class="grid grid-cols-3 gap-6">
+    <!-- Left: Card Image and Description -->
+    <div class="col-span-1">
+        <img src="{{ route('images.show', { name: product.image.name }) }}" alt="{{ product.card.name }}" class="w-full rounded-lg shadow-md mb-4">
+        <div class="bg-white rounded-lg p-4">
+            <h3 class="font-bold mb-2">Descrição</h3>
+            <p class="text-gray-700 text-sm">{{ product.card.description }}</p>
+        </div>
+    </div>
+
+    <!-- Middle: Card Name and Back Button -->
+    <div class="col-span-1 flex flex-col justify-between">
+        <label class="text-3xl font-bold mt-2 text-center line-clamp-2">{{ product.card.name }}</label>
+        <a href="javascript:history.back()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded text-center">
+            ← Voltar
+        </a>
+    </div>
+
+    <!-- Right: Card Details and Offers -->
+    <div class="col-span-1">
+        <div class="bg-white rounded-lg p-4 mb-4">
+            <h3 class="font-bold mb-3">Informações</h3>
+            <p class="text-gray-700 mb-2"><strong>Raridade:</strong> {{ product.card.rarity }}</p>
+            <p class="text-gray-700 mb-2"><strong>Série:</strong> {{ product.card.expansion.name }}</p>
+            <p class="text-gray-700"><strong>Número:</strong> {{ product.card.collectionCode }}</p>
+        </div>
+
+        <div class="bg-white rounded-lg p-4">
+            <h3 class="font-bold mb-3">Ofertas</h3>
+            <div class="space-y-3">
+                @each(offer in product.offers)
+                    <div class="border-l-4 border-blue-500 pl-3 py-2">
+                        <p class="text-sm font-semibold">{{ offer.seller.name }}</p>
+                        <p class="text-xs text-gray-600">Condição: {{ offer.condition }}</p>
+                        <p class="text-lg font-bold text-green-600">R$ {{ offer.price }}</p>
+                        <a href="{{ route('cart.add', { product: offer.id, quantity: 1 }) }}" class="mt-2 inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded text-sm">Adicionar ao Carrinho</a>
+                    </div>
+                @endeach
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+@end

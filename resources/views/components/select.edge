@@ -1,0 +1,10 @@
+<select {{ $props.toAttrs() }} >
+    <option value="" disabled selected>{{ $props.default || "Teste" }}</option>
+    @each(option in $props.options)
+    @if(option === $props.selected)
+        <option value="{{ option }}" selected>{{ option }}</option>
+    @else
+        <option value="{{ option }}">{{ option }}</option>
+    @endif
+    @endeach
+</select>

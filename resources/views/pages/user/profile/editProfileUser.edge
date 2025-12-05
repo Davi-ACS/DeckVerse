@@ -1,0 +1,70 @@
+@layout.app({ title: "Profile", js: "/resources/js/auth.js" })
+<div class="container w-full md:w-2/4 place-self-center h-full bg-gray-100 rounded-lg shadow-md p-6">
+    @form({ action: route('user.profile.update'), method: 'POST' })
+    <div class="p-8 border-1 rounded-lg bg-white shadow-md mt-6 md:mt-0 w-full place-self-center">
+        <h1 class="text-3xl font-bold mb-4 place-self-center">Editar Perfil</h1>
+
+        <div>
+            <label for="full_name" class="label-input">Nome Completo</label>
+            @!input({
+                type: 'text',
+                id: 'full_name',
+                name: 'full_name',
+                class: 'input-text',
+                placeholder: auth.user.fullName,
+                warning: 'Seu novo nome'
+            })
+        </div>
+        <div class="mt-4">
+            <label for="email" class="label-input">Email</label>
+            @!input({
+                type: 'email',
+                id: 'email',
+                name: 'email',
+                class: 'input-text',
+                placeholder: auth.user.email,
+                warning: 'Seu novo email'
+            })
+        </div>
+
+        <div class="mt-4">
+            <label for="birth_date" class="label-input">Data de Nascimento</label>
+            @!input({
+                type: 'date',
+                id: 'birth_date',
+                name: 'birth_date',
+                value: auth.user.birthDate,
+                class: 'input-text',
+                placeholder: 'Digite sua data de nascimento',
+                warning: 'Sua nova data de nascimento'
+            })
+        </div>
+       
+        <div class="mt-6">
+            <label for="password" class="label-input">Senha</label>
+            @!input({
+                type: 'password',
+                id: 'password',
+                name: 'password',
+                class: 'input-text',
+                placeholder: 'Digite sua nova senha (Deixe em branco para manter a senha atual)',
+                warning: 'Sua nova senha'
+            })
+            <div class="mt-2 flex items-center">
+                <input type="checkbox" id="showPassword" class="mr-2" onchange="togglePasswordVisibility('password', this.checked)">
+                <label for="showPassword" class="text-sm text-gray-600">Mostrar senha</label>
+            </div>
+            
+        </div>
+
+        <div class="mt-6">
+            <button type="submit" class="input-bttn bg-green-500 text-white rounded hover:bg-green-600 w-full text-center">Salvar Alterações</button>
+        </div>
+        <div>
+            <a href="{{ route('user.profile') }}" class="flex items-center justify-center h-12 px-4 bg-gray-500 text-white rounded hover:bg-gray-600 w-full text-center mt-4">Cancelar</a>
+        </div>
+
+    </div>
+    @endform
+</div>
+@end

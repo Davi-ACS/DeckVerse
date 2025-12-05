@@ -8,10 +8,7 @@ export default class extends BaseSchema {
       table.increments('id')
       table.integer('game_id').unsigned().references('id').inTable('games').onDelete('CASCADE')
       table.string('name', 100).notNullable().unique()
-
-      table.string('release_date', 50).notNullable()
       
-
       table.timestamp('created_at')
       table.timestamp('updated_at')
     })

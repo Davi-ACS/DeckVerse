@@ -8,44 +8,33 @@ import Game from "#models/game";
 export default class ExpansionsController {
     public async create({ view } : HttpContext) {
         const games = await Game.all()
-        return view.render('pages/cards/expansion/createExpansion', { games })
+        const names = games.map(game => game.name)
+        return view.render('pages/cards/expansion/createExpansion', { games, names })
     }
     public async store({ request, response }: HttpContext) {
-        try {
-            const payload = await request.validateUsing(createExpansionValidator)
-            const expansion = await Expansion.create({
-                name: payload.name_expansion,
-                releaseDate: payload.release_year + '-' + payload.release_month + '-' + payload.release_day,
-                gameId: payload.game_id,
-            })
-            console.log('Expansion created successfully:', expansion)
-            expansion.save()
-        } catch (error) {
-            console.log(error)
-            return response.redirect().back()
-        }
+        const payload = await request.validateUsing(createExpansionValidator)
+        const game_id = (await Game.findByOrFail('name', payload.game_name)).id
+        const expansion = await Expansion.create({name: payload.name_expansion,gameId: game_id,})
+        expansion.save()
 
         return response.redirect().toRoute('expansion.view')
     }
 
     public async edit({ params, view }: HttpContext) {
         const expansion = await Expansion.findOrFail(params.id)
+        await expansion.load('game')
         const games = await Game.all()
-        return view.render('pages/cards/expansion/createExpansion', { expansion, games })
+        const names = games.map(game => game.name)
+        return view.render('pages/cards/expansion/createExpansion', { expansion, games, names })
     }
 
     public async update({ params, request, response }: HttpContext) {
-        try {
-            const expansion = await Expansion.findOrFail(params.id)
-            const payload = await request.validateUsing(createExpansionValidator)
-            expansion.name = payload.name_expansion
-            expansion.releaseDate = payload.release_year + '-' + payload.release_month + '-' + payload.release_day
-            expansion.gameId = payload.game_id
-            await expansion.save()
-        } catch (error) {
-            console.log(error)
-            return response.redirect().back()
-        }
+        const expansion = await Expansion.findOrFail(params.id)
+        const payload = await request.validateUsing(createExpansionValidator)
+        const game_id = (await Game.findByOrFail('name', payload.game_name)).id
+        expansion.name = payload.name_expansion
+        expansion.gameId = game_id
+        await expansion.save()
 
         return response.redirect().toRoute('expansion.view')
     }
@@ -68,7 +57,6 @@ export default class ExpansionsController {
         }
             
     }
-
 
     public async destroy({ params, response }: HttpContext) {
         try {

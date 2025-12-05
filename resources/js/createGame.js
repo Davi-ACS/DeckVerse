@@ -1,3 +1,11 @@
+window.onload = function() {
+        //atualizar os textos das opções para refletir a nova ordem
+        Array.from(rarityGame.options).forEach((opt, index) => {
+            if (opt.value !== "")
+                opt.text = index + ": " + opt.value;
+        });
+}
+
 
 //select raridade do jogo
 const rarityGame = document.getElementById('rarity_game');
@@ -14,6 +22,7 @@ document.getElementById('add_rarity').addEventListener('click', function() {
         option.value = newRarity;
         option.text = (rarityGame.options.length) + ": " + newRarity;
         rarityGame.add(option);
+
 
         alert("Raridade adicionada: " + newRarity);
     }
@@ -35,6 +44,10 @@ document.getElementById('remove_rarity').addEventListener('click', function() {
         // atualizar o input hidden removendo a raridade selecionada
         const rarities = rarityGameInput.value.split(" ").filter(rarity => rarity !== selectedRarity && rarity !== "");
         rarityGameInput.value = rarities.join(" ") + " ";
+
+        if (rarityGame.options.length === 1) {
+            rarityGame.selectedIndex = 0; // Nenhuma opção selecionada
+        }
 
         alert("Raridade removida: " + selectedRarity);
     }
@@ -93,7 +106,11 @@ document.getElementById('remove_language').addEventListener('click', function() 
         // atualizar o input hidden removendo o idioma selecionado
         const languages = languageGameInput.value.split(" ").filter(language => language !== selectedLanguage && language !== "");
         languageGameInput.value = languages.join(" ") + " ";
-        
+
+        if (languageGame.options.length === 1) {
+            languageGame.selectedIndex = 0; // Nenhuma opção selecionada
+        }
+
         alert("Idioma removido: " + selectedLanguage);
     }
 });
