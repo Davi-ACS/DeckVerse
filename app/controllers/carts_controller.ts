@@ -15,7 +15,7 @@ export default class CartsController {
             const quantity = parseInt(params.quantity)
 
             // verifico se o produto existe
-            await Product.findOrFail(productId)
+            const product = await Product.findOrFail(productId)
 
             // pego o carrinho do usuario ou crio um novo
             let cart: Cart
@@ -37,6 +37,13 @@ export default class CartsController {
                     await cardItem.delete()
                     return response.redirect().toRoute('cart.show')
                 }
+                // verifica o estoque da oferta
+                else if (cardItem.quantity + quantity >= product.quantity) {
+                    cardItem.quantity = product.quantity
+                    await cardItem.save()
+                    return response.redirect().toRoute('cart.show')
+                }
+
                 else if (cardItem.quantity + quantity > 10) {
                     cardItem.quantity = 10
                     await cardItem.save()

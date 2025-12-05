@@ -123,7 +123,7 @@ export default class SellersController {
         const user = auth.user!
         const page = request.input('page') ||  1
         const pageSize = 8
-        let limit
+        let limit = 1
 
         // Verifica se o usuário é um vendedor
         let seller: Seller

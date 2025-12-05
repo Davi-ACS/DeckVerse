@@ -26,7 +26,7 @@ const CartsController = () => import('#controllers/carts_controller')
 // Página inicial
 router.group(() => {
     router.get('/', [ProductsController, 'show']).as('home')
-    router.get('/:game', [ProductsController, 'viewExpansionProducts']).as('home.viewFiltered')
+    router.get('/store/:game', [ProductsController, 'viewExpansionProducts']).as('home.viewFiltered')
 })
 
 // Páginas para autenticação

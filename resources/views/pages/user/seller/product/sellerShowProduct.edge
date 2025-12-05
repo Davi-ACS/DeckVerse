@@ -35,7 +35,7 @@
             value: gameName,
         })
         @!input({
-            type: 'text',
+            type: 'hidden',
             value: card.image,
             id: 'image_url',
             name: 'image_URL',
@@ -121,7 +121,7 @@
 
         <div class="mt-6">
             <button id="createbtt" type="submit" class="input-bttn bg-green-500 text-white rounded hover:bg-green-600 w-full text-center">Adicionar Produto</button>
-            <a href="{{ route('seller.products') }}">Voltar</a>
+            <a href="{{ route('seller.products.create', { game: gameName }) }}" class="input-bttn bg-gray-500 text-white rounded hover:bg-gray-600 w-full text-center mt-2 inline-block">Cancelar</a>
         </div>
     </div>
     @endform

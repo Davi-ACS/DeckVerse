@@ -34,40 +34,13 @@
             <div class="mb-4 justify-between inline-flex w-full">
                 <div>
                     <label for="rarity_card" class="block mb-2 text-xl font-bold">Raridade da Carta:</label>
-                    <select name="rarity_card" id="rarity_card" class="w-full p-2 border-1 border-gray-300 rounded-lg bg-white" required>
-                        <option value="" disabled {{ card ? '' : 'selected' }}>Selecione a raridade</option>
-                        @each(rarity in rarities)
-                            @if(rarity !== "")
-                                @if(card && card.rarity === rarity)
-                                    <option value="{{ rarity }}" selected>{{ rarity }}</option>
-                                @else
-                                    <option value="{{ rarity }}">{{ rarity }}</option>
-                                @end
-                            @end    
-                        @endeach
-                    </select>
+                    <input type="text" name="rarity_card" id="rarity_card" class="w-full p-2 border-1 border-gray-300 rounded-lg bg-white" required value="{{ card ? card.rarity : '' }}">
                 </div>
 
                 <div>
                     <label for="collectionCode" class="block mb-2 text-xl font-bold">Código da Coleção:</label>
                     <input type="text" name="collectionCode" id="collectionCode" class="w-full p-2 border-1 border-gray-300 rounded-lg bg-white" required value="{{ card ? card.collectionCode : '' }}">
-                </div>
-
-                <div>
-                    <label for="language_card" class="block mb-2 text-xl font-bold">Idioma da Carta:</label>
-                    <select name="language_card" id="language_card" class="w-full p-2 border-1 border-gray-300 rounded-lg bg-white" required>
-                        <option value="" disabled {{ card ? '' : 'selected' }}>Selecione o idioma</option>
-                        @each(language in languages)
-                            @if(language !== "")
-                                @if(card && card.language === language)
-                                    <option value="{{ language }}" selected>{{ language }}</option>
-                                @else   
-                                    <option value="{{ language }}">{{ language }}</option>
-                                @end
-                            @end    
-                        @endeach
-                    </select>
-                </div>                
+                </div>             
         </div>
                 <div>
                     <button type="submit" class=" flex items-center justify-center h-12 px-4 bg-green-500 text-white rounded hover:bg-green-600 w-full text-center mt-6 hover:cursor-pointer">Salvar Carta</button>

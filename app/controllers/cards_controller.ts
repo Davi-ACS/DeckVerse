@@ -17,9 +17,7 @@ export default class CardsController {
     try {    
         const expansion = await (await Expansion.findByOrFail('id', params.id))
         await expansion.load('game')
-        const rarities = expansion.game.rarity.split(" ")
-        const languages = expansion.game.language.split(" ")
-        return view.render('pages/cards/card/createCard', { expansion: expansion, rarities: rarities, languages: languages })
+        return view.render('pages/cards/card/createCard', { expansion: expansion})
 
     } catch (error) {
         console.error(error)
@@ -35,7 +33,6 @@ export default class CardsController {
                 expansionId: data.id_expansion,
                 description: data.description_card,
                 rarity: data.rarity_card,
-                language: data.language_card,
                 collectionCode: data.collectionCode
             })
             const image = new Image()
@@ -107,7 +104,6 @@ export default class CardsController {
             card.name = data.name_card
             card.description = data.description_card
             card.rarity = data.rarity_card
-            card.language = data.language_card
             card.collectionCode = data.collectionCode
 
             if (data.image_card) {
